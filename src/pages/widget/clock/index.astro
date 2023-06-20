@@ -42,14 +42,14 @@ const calculatePosition = (offset: number, angle: number) => {
         y: centerPoint.y + offset * Math.sin(angle),
     };
 }
-const secondsPosition = calculatePosition(100, (serverTime.getSeconds() + 45) * ((Math.PI * 2) / 60))
-const minutesPosition = calculatePosition(150, (serverTime.getMinutes() + 45) * ((Math.PI * 2) / 60))
-const hoursPosition = calculatePosition(200, (serverTime.getHours() + 18) * ((Math.PI * 2) / 24))
+const secondsPosition = calculatePosition(canvas.size / 5, (serverTime.getSeconds() + 45) * ((Math.PI * 2) / 60))
+const minutesPosition = calculatePosition(canvas.size / (3 + 1/3), (serverTime.getMinutes() + 45) * ((Math.PI * 2) / 60))
+const hoursPosition = calculatePosition(canvas.size / 2.5, (serverTime.getHours() + 18) * ((Math.PI * 2) / 24))
 ---
 
 <Layout>
-    <main class="min-h-screen w-scren">
-        <svg width={canvas.size} height={canvas.size} class="border-2">
+    <main class="min-h-screen w-scren flex justify-center items-center">
+        <svg width={canvas.size} height={canvas.size}>
           {dials.map((circle) => <Circle circle={circle}/>)}
           {timeIndicators.map((line) => <Line line={line}/>)}
           <Circle circle={{point: centerPoint, radius: 20, fill: "gray", stroke: 0}} />
