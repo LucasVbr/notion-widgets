@@ -8,7 +8,7 @@ import type LineState from '../../../models/LineState';
 import type CircleState from '../../../models/CircleState';
 import {buildDials, buildTimeIndicators} from './utils';
 
-const canvas = {size: 500};
+const canvas = {size: 400};
 
 const centerPoint: PointState = {
   x: canvas.size / 2,
@@ -68,8 +68,8 @@ const hoursPosition = calculatePosition(canvas.size / 2.5, (serverTime.getHours(
                 <animateTransform attributeName="transform"
                                   attributeType="XML"
                                   type="rotate"
-                                  from="0 250 250"
-                                  to="360 250 250"
+                                  from={`0 ${centerPoint.x} ${centerPoint.x}`}
+                                  to={`360 ${centerPoint.x} ${centerPoint.y}`}
                                   dur="86400s"
                                   repeatCount="indefinite"/>
             </Circle>
@@ -77,8 +77,8 @@ const hoursPosition = calculatePosition(canvas.size / 2.5, (serverTime.getHours(
                 <animateTransform attributeName="transform"
                                   attributeType="XML"
                                   type="rotate"
-                                  from="0 250 250"
-                                  to="360 250 250"
+                                  from={`0 ${centerPoint.x} ${centerPoint.x}`}
+                                  to={`360 ${centerPoint.x} ${centerPoint.y}`}
                                   dur="3600s"
                                   repeatCount="indefinite"/>
             </Circle>
@@ -86,8 +86,8 @@ const hoursPosition = calculatePosition(canvas.size / 2.5, (serverTime.getHours(
                 <animateTransform attributeName="transform"
                                   attributeType="XML"
                                   type="rotate"
-                                  from="0 250 250"
-                                  to="360 250 250"
+                                  from={`0 ${centerPoint.x} ${centerPoint.x}`}
+                                  to={`360 ${centerPoint.x} ${centerPoint.y}`}
                                   dur="60s"
                                   repeatCount="indefinite"/>
             </Circle>
