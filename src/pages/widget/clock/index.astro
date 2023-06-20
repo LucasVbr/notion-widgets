@@ -1,0 +1,108 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Line from '../../../components/Line.astro';
+import Circle from '../../../components/Circle.astro';
+
+import type PointState from '../../../models/PointState';
+import type LineState from '../../../models/LineState';
+import type CircleState from '../../../models/CircleState';
+import {buildDials, buildTimeIndicators} from './utils';
+
+const canvas = {size: 500};
+
+const centerPoint: PointState = {
+  x: canvas.size / 2,
+  y: canvas.size / 2,
+};
+
+const dials: CircleState[] = buildDials(centerPoint, canvas.size / 10,
+    canvas.size / 2.5, 3);
+const timeIndicators: LineState[] =
+    buildTimeIndicators(centerPoint, canvas, 12, 10)
+        .concat(buildTimeIndicators(centerPoint, canvas, 4, 20))
+;
+
+const day = [
+    "Dimanche",
+    "Lundi",
+    'Mardi',
+    "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi"
+];
+
+
+
+const serverTime = new Date();
+
+const calculatePosition = (offset: number, angle: number) => {
+    return {
+        x: centerPoint.x + offset * Math.cos(angle),
+        y: centerPoint.y + offset * Math.sin(angle),
+    };
+}
+const secondsPosition = calculatePosition(100, (serverTime.getSeconds() + 45) * ((Math.PI * 2) / 60))
+const minutesPosition = calculatePosition(150, (serverTime.getMinutes() + 45) * ((Math.PI * 2) / 60))
+const hoursPosition = calculatePosition(200, (serverTime.getHours() + 18) * ((Math.PI * 2) / 24))
+---
+
+<Layout>
+    <main class="min-h-screen w-scren">
+        <svg width={canvas.size} height={canvas.size} class="border-2">
+          {dials.map((circle) => <Circle circle={circle}/>)}
+          {timeIndicators.map((line) => <Line line={line}/>)}
+          <Circle circle={{point: centerPoint, radius: 20, fill: "gray", stroke: 0}} />
+
+        <text id="display" x={centerPoint.x} y={centerPoint.y - 30}
+              text-anchor="middle"
+              font-size={canvas.size / 23}>HH:MM:SS
+        </text>
+
+            <text x={centerPoint.x} y={centerPoint.y + 50}
+                  text-anchor="middle"
+                  font-size={canvas.size / 25}>{day[(new Date()).getDay()]}
+            </text>
+
+            <Circle id="hoursCircle" circle={{point: hoursPosition, radius: 25, fill: 'gray', stroke: 0}}>
+                <animateTransform attributeName="transform"
+                                  attributeType="XML"
+                                  type="rotate"
+                                  from="0 250 250"
+                                  to="360 250 250"
+                                  dur="86400s"
+                                  repeatCount="indefinite"/>
+            </Circle>
+            <Circle id="minutesCircle" circle={{point: minutesPosition, radius: 20, fill: 'gray', stroke: 0}}>
+                <animateTransform attributeName="transform"
+                                  attributeType="XML"
+                                  type="rotate"
+                                  from="0 250 250"
+                                  to="360 250 250"
+                                  dur="3600s"
+                                  repeatCount="indefinite"/>
+            </Circle>
+            <Circle id="secondsCircle" circle={{point: secondsPosition, radius: 10, fill: 'gray', stroke: 0}}>
+                <animateTransform attributeName="transform"
+                                  attributeType="XML"
+                                  type="rotate"
+                                  from="0 250 250"
+                                  to="360 250 250"
+                                  dur="60s"
+                                  repeatCount="indefinite"/>
+            </Circle>
+
+        </svg>
+    </main>
+</Layout>
+
+<script>
+  const displayElement = document.getElementById('display');
+
+  const zeroPad = (num, places) => String(num).padStart(places, '0');
+  setInterval(() => {
+    const time = new Date();
+    displayElement.innerHTML = `${zeroPad(time.getHours(), 2)}:${zeroPad(
+        time.getMinutes(), 2)}:${zeroPad(time.getSeconds(), 2)}`;
+  }, 1000);
+</script>

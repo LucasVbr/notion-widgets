@@ -1,0 +1,14 @@
+---
+import LineState from '../models/LineState';
+export interface Props {
+  line: LineState;
+  stroke?: number;
+}
+
+const {line, stroke} = Astro.props;
+---
+
+<line x1={line.a.x} y1={line.a.y}
+      x2={line.b.x} y2={line.b.y}
+      stroke={stroke ?? 'black'}
+/>
