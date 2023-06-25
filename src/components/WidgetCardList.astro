@@ -1,0 +1,13 @@
+---
+import {WidgetState} from '../models/WidgetState';
+import WidgetCard from './WidgetCard.astro';
+type Props = {
+    widgets: WidgetState[]
+}
+
+const {widgets}: Props = Astro.props;
+---
+
+<div class="flex gap-2">
+    {widgets.map(widget => <WidgetCard widget={widget}/>)}
+</div>

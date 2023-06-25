@@ -1,0 +1,13 @@
+---
+import {WidgetState} from '../models/WidgetState';
+type Props = {
+    widget: WidgetState
+}
+
+const {widget}: Props = Astro.props;
+---
+
+<a href={widget.url} class="p-4 rounded-2xl border-[1px] shadow-md active:scale-95 transition-all ease-in-out duration-100">
+    <h2 class="font-bold text-xl">{widget.data.name}</h2>
+    {widget.data.description && <p>{widget.data.description}</p>}
+</a>

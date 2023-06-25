@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+export const data = {
+    name: "Clock ⏰"
+}
+---
+<Layout title="Clock">
+    <main class="h-screen w-screen flex flex-col gap-7 justify-center items-center">
+        <h2 id="display" class="font-extralight text-5xl"></h2>
+        <h3 id="day" class="text-xl capitalize"></h3>
+    </main>
+</Layout>
+
+<script is:inline>
+  const displayElement = document.getElementById('display');
+  const dayElement = document.getElementById('day');
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const language = urlParams.get('language') ?? 'en-US';
+
+  setInterval(() => {
+    const now = new Date();
+    displayElement.innerText = now.toLocaleTimeString(language);
+    dayElement.innerText = now.toLocaleDateString(language, {weekday: 'long'});
+  }, 1000);
+</script>
