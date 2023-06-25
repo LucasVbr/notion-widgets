@@ -1,0 +1,42 @@
+---
+
+import Layout from '../../layouts/Layout.astro';---
+
+<Layout title="Countdown">
+    <main class="w-screen h-screen flex flex-col justify-center items-center">
+        <h2 id="title" class="text-center text-xl font-bold"></h2>
+        <h3 id="display"></h3>
+    </main>
+</Layout>
+
+<script lang="ts" is:inline>
+  const titleElement = document.getElementById("title");
+  const displayElement = document.getElementById("display");
+
+  const queryString = window.location.search
+  const urlParams =  new URLSearchParams(queryString);
+  const titleParam = urlParams.get("title");
+  const datetimeParam = urlParams.get("datetime");
+
+  titleElement.innerText = titleParam;
+  const date = new Date(datetimeParam)
+
+  const interval = setInterval(() => {
+    const now = new Date()
+    const diff = Math.abs(date.getTime() - now.getTime());
+    if (diff <= 0) clearInterval(interval);
+
+    const days = Math.floor(diff / (1000 * 3600 * 24))
+    const hours = Math.floor(diff / (1000 * 3600)) % 24
+    const minutes = Math.floor(diff / (1000 * 60)) % 60
+    const seconds = Math.floor(diff / (1000)) % 60
+
+    const display = []
+    if (days > 0) display.push(`${days}d`)
+    if (hours > 0) display.push(`${hours}h`)
+    if (minutes > 0) display.push(`${minutes}m`)
+    if (seconds > 0) display.push(`${seconds}s`)
+
+    displayElement.innerText = display.join(" ");
+  }, 1000)
+</script>
