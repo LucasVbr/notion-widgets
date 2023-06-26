@@ -2,8 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 
 export const data = {
-    name: "Countdown ⌛️"
-}
+  name: 'Countdown ⌛️',
+};
 ---
 
 <Layout title="Countdown">
@@ -14,16 +14,13 @@ export const data = {
 </Layout>
 
 <script lang="ts" is:inline>
-  const titleElement = document.getElementById('title');
-  const displayElement = document.getElementById('display');
+  const {title, datetime} = getUrlParams({title: 'Event', datetime: ''});
+  const titleElement = $('#title');
+  const displayElement = $('#display');
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const titleParam = urlParams.get('title') ?? 'Event';
-  const datetimeParam = urlParams.get('datetime') ?? '';
+  titleElement.innerText = title;
 
-  titleElement.innerText = titleParam;
-  const date = new Date(datetimeParam);
-
+  const date = new Date(datetime);
   const interval = setInterval(() => {
     const now = new Date();
     const diff = Math.floor(Math.abs(date.getTime() - now.getTime()) / 1000);
