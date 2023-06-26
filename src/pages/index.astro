@@ -4,18 +4,12 @@ import {WidgetState} from '../models/WidgetState';
 import WidgetCardList from '../components/WidgetCardList.astro';
 import Card from '../layouts/Card.astro';
 
-const articles = await Astro.glob("./articles/*.md")
 const widgets = await Astro.glob<WidgetState>('./widgets/*.astro');
-
-const gettingStartArticle = articles.find(article => article.frontmatter.id === "getting-start")
 ---
 
 <Layout title="Welcome to Astro.">
     <main class="container mx-auto flex flex-col gap-5">
         <h1 class="text-5xl font-bold py-5">Notion Widgets</h1>
-
-        {gettingStartArticle && <Card set:html={gettingStartArticle.compiledContent()}/>}
-
         <WidgetCardList widgets={widgets}/>
     </main>
 </Layout>
