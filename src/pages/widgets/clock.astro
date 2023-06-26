@@ -21,6 +21,7 @@ export const data = {
   setInterval(() => {
     const now = new Date();
     displayElement.innerText = now.toLocaleTimeString(language);
-    dayElement.innerText = now.toLocaleDateString(language, {weekday: 'long'});
+    dayElement.innerText = now.toLocaleDateString(language,
+        {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'});
   }, 1000);
 </script>
