@@ -1,0 +1,14 @@
+---
+---
+
+<script is:inline>
+  const getUrlParams = (defaultParams = {}) => {
+    let params = {...defaultParams};
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.forEach((value, key) => {
+      if (key && value) params[key] = value
+    })
+    return params
+  }
+</script>
