@@ -1,0 +1,12 @@
+---
+import Layout from './Layout.astro';
+const {frontmatter} = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+    <main class="w-screen min-h-screen bg-gray-400 p-10">
+        <article class="container bg-gray-300 mx-auto p-5 prose lg:prose-xl rounded-md shadow-2xl">
+            <slot/>
+        </article>
+    </main>
+</Layout>

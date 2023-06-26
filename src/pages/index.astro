@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import {WidgetState} from '../models/WidgetState';
 import WidgetCardList from '../components/WidgetCardList.astro';
-import Card from '../layouts/Card.astro';
 
 const widgets = await Astro.glob<WidgetState>('./widgets/*.astro');
 ---
